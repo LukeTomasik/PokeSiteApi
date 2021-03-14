@@ -11,8 +11,6 @@ async function pokeHandler() {
   const pokeContainer = document.querySelector('#pokeContainer')
   pokeContainer.innerHTML= ''
 
-
-
   async function getFetch(url) {
     const res = await fetch(url);
     const data = await res.json();
@@ -61,13 +59,14 @@ async function pokeHandler() {
 
     console.log(evoChainData);
 
-    
+
     const basePokemon = evoChainData.chain.species.name;
     postPokeSprite(await getPokeInfo(basePokemon));
     if (evoChainData.chain.evolves_to.length > 0 && evoChainData.chain.evolves_to !== []) {
       for(let i= 0;i <evoChainData.chain.evolves_to.length;i++) {
         console.log('second evolution of pokemon')
         postPokeSprite(await getPokeInfo(evoChainData.chain.evolves_to[i].species.name))
+        
       }
       if(evoChainData.chain.evolves_to[0].evolves_to.length > 0 && evoChainData.chain.evolves_to.evolves_to !== []) {
         for(let j= 0;j <evoChainData.chain.evolves_to[0].evolves_to.length;j++) {
@@ -76,7 +75,17 @@ async function pokeHandler() {
           postPokeSprite(await getPokeInfo(evoChainData.chain.evolves_to[0].evolves_to[j].species.name))
         }
       }
+      if(evoChainData.chain.evolves_to[1].evolves_to.length > 0 && evoChainData.chain.evolves_to.evolves_to !== []) {
+        for(let j= 0;j <evoChainData.chain.evolves_to[1].evolves_to.length;j++) {
+          console.log('third evolution pokemon')
+          console.log([j])
+          postPokeSprite(await getPokeInfo(evoChainData.chain.evolves_to[1].evolves_to[j].species.name))
+        }
+      }
     }
+
+    // const basePokemon = evoChainData.chain.species.name;
+    // postPokeSprite(await getPokeInfo(basePokemon));
 
     // const secondPokemon = evoChainData.chain.evolves_to[0].species.name;
     // const thirdPokemon = evoChainData.chain.evolves_to[0].evolves_to[0].species.name;
