@@ -24,7 +24,10 @@ async function pokeHandler() {
     return pokeData;
   }
 
-  async function postPokeSprite(pokemonData) {
+  // this adds html elements for the pokemon name and pokemon image
+  //suggestions? - create 2 functions 1 for second evolution one for third evolution
+  // multiple paramaters for base/second evo/third evo
+  async function postPokeSprite(pokemonData,two) {
     const pokeHTML = `
       <p class='pokeEvolotion'>${pokemonData.name}</p>
       <img class='pokeEvolution' src=${pokemonData.sprites.front_default} />
