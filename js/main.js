@@ -42,7 +42,7 @@ async function pokeHandler() {
 
     const pokeData = await getPokeInfo(choice);
 
-    console.log(pokeData);
+    // console.log(pokeData);
 
     document.querySelector("span").innerHTML = pokeData.types[0].type.name;
     document.querySelector("#moves").innerHTML = pokeData.moves[0].move.name;
@@ -54,21 +54,35 @@ async function pokeHandler() {
     pokeID = pokeData.species.url;
     const speciesData = await getFetch(pokeID);
 
-    console.log(speciesData);
+    // console.log(speciesData);
 
     const evoChainUrl = speciesData.evolution_chain.url;
     const evoChainData = await getFetch(evoChainUrl);
 
     console.log(evoChainData);
 
+    
     const basePokemon = evoChainData.chain.species.name;
-    const secondPokemon = evoChainData.chain.evolves_to[0].species.name;
-    const thirdPokemon = evoChainData.chain.evolves_to[0].evolves_to[0].species.name;
-
-
     postPokeSprite(await getPokeInfo(basePokemon));
-    postPokeSprite(await getPokeInfo(secondPokemon));
-    postPokeSprite(await getPokeInfo(thirdPokemon));
+    if (evoChainData.chain.evolves_to.length > 0 && evoChainData.chain.evolves_to !== []) {
+      for(let i= 0;i <evoChainData.chain.evolves_to.length;i++) {
+        console.log('second evolution of pokemon')
+        postPokeSprite(await getPokeInfo(evoChainData.chain.evolves_to[i].species.name))
+      }
+      if(evoChainData.chain.evolves_to[0].evolves_to.length > 0 && evoChainData.chain.evolves_to.evolves_to !== []) {
+        for(let j= 0;j <evoChainData.chain.evolves_to[0].evolves_to.length;j++) {
+          console.log('third evolution pokemon')
+          console.log([j])
+          postPokeSprite(await getPokeInfo(evoChainData.chain.evolves_to[0].evolves_to[j].species.name))
+        }
+      }
+    }
+
+    // const secondPokemon = evoChainData.chain.evolves_to[0].species.name;
+    // const thirdPokemon = evoChainData.chain.evolves_to[0].evolves_to[0].species.name;
+
+    // postPokeSprite(await getPokeInfo(secondPokemon));
+    // postPokeSprite(await getPokeInfo(thirdPokemon));
 
 
   } catch (err) {
