@@ -16,5 +16,9 @@ Used HTML and the DOM in JavaScript. With API and async, await functionality , I
 
 Am working on producing conditional statements for those pokemon with more than 3 evolutions
 
+## Optimization:
+remove old evolutions
+create logic to allow 1,2,3+ evolutions to show
+Insert html-moves using Javascript
 
 

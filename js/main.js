@@ -1,10 +1,18 @@
 //Example fetch using pokemonapi.co
+// dom object
 document.querySelector("button").addEventListener("click", pokeHandler);
-let dataFromFirstFetch;
+
 
 //let pokeID
 
 async function pokeHandler() {
+ // run reset for evolutions
+ 
+  const pokeContainer = document.querySelector('#pokeContainer')
+  pokeContainer.innerHTML= ''
+
+
+
   async function getFetch(url) {
     const res = await fetch(url);
     const data = await res.json();
@@ -20,8 +28,8 @@ async function pokeHandler() {
 
   async function postPokeSprite(pokemonData) {
     const pokeHTML = `
-      <p>${pokemonData.name}</p>
-      <img src=${pokemonData.sprites.front_default} />
+      <p class='pokeEvolotion'>${pokemonData.name}</p>
+      <img class='pokeEvolution' src=${pokemonData.sprites.front_default} />
     `;
     const pokeDestination = document.getElementById("pokeContainer");
 
@@ -55,33 +63,14 @@ async function pokeHandler() {
 
     const basePokemon = evoChainData.chain.species.name;
     const secondPokemon = evoChainData.chain.evolves_to[0].species.name;
-    const thirdPokemon =
-      evoChainData.chain.evolves_to[0].evolves_to[0].species.name;
+    const thirdPokemon = evoChainData.chain.evolves_to[0].evolves_to[0].species.name;
+
 
     postPokeSprite(await getPokeInfo(basePokemon));
     postPokeSprite(await getPokeInfo(secondPokemon));
     postPokeSprite(await getPokeInfo(thirdPokemon));
 
-    // const evoThreeUrl =
-    // const evoThreeRes = await fetch(evoThreeUrl)
-    // const evoThreeData = await evoThreeRes.json()
-    // console.log(evoThreeData)
 
-    // evoThreeData.
-    // const
-    // // console.log(data.chain.evolves_to[0].species)
-    // console.log(data.chain.species)
-
-    // document.querySelector('#img3').src = data.sprites
-    // document.querySelector('#img4').src = data.sprites
-    // document.querySelector('#img5').src = data.sprites
-    // document.querySelector('#img6').src = data.sprites
-
-    // fetch(url3)
-    // .then(res => res.json()) // parse response as JSON
-    // .then(data => {
-    // console.log(data)
-    // })
   } catch (err) {
     console.log(`err ${err}`);
   }
